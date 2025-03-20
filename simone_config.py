@@ -9,12 +9,19 @@ def create_pseudo_random_code(clen=1000, seed=0):
     having to store all actual codes. the seed can then
     act as a sort of station_id.
     """
-    np.random.seed(seed)
-    phases = np.array(
-        np.sign(np.random.randn(clen)),
-        dtype=np.complex64,
-    )
-    return(phases)
+    n.random.seed(seed)
+    code=n.random.random(length)
+    code=n.exp(2.0*n.pi*1.0j*code)
+    code=n.angle(code)
+    code=-1.0*n.sign(code)
+    code=n.array(code,dtype=n.complex64)
+    
+#    np.random.seed(seed)
+#    phases = np.array(
+  #      np.sign(np.random.randn(clen)),
+   #     dtype=np.complex64,
+   # )
+    return(code)
 
 def periodic_convolution_matrix(envelope, rmin=0, rmax=100):
     """
@@ -71,6 +78,39 @@ def create_estimation_matrix_cached(seed,clen=1000,rmin=0,rmax=900):
 
 kb_code_seeds = n.array([5, 20, 608, 1686, 2755, 4972],dtype=int)
 jr_code_seeds = n.array([7, 14, 137, 220, 419, 1796],dtype=int)
+
+# antenna_coordinates_rx   Dataset {1, 3}
+#     Data:
+#          0, 0, 0
+# antenna_coordinates_tx   Dataset {6, 3}
+#     Data:
+#          0, 25, 0, 23.776, 7.725, 0, 14.695, -20.225, 0, -14.695, -20.225, 0, -23.776, 7.725, 0, 0, 0, 0
+# aoa_mode                 Dataset {SCALAR}
+#     Data:
+#          "MISO"
+# frequency                Dataset {SCALAR}
+#     Data:
+#          32550000
+# gps_rx                   Dataset {3}
+#     Data:
+#          55.094581, 14.741921, 10
+# gps_tx                   Dataset {3}
+#     Data:
+#          54.118309, 11.769558, 110.153
+# name_rx                  Dataset {SCALAR}
+#     Data:
+#          "bornholm"
+# name_system              Dataset {SCALAR}
+#     Data:
+#          "sandra"
+# name_tx                  Dataset {SCALAR}
+#     Data:
+#          "kborn"
+# time_resolution_ns       Dataset {SCALAR}
+#     Data:
+#          10000000
+
+kb={"gps_tx":[54.118309, 11.769558, 110.153],"antenna_coordinates_tx":[0, 25, 0, 23.776, 7.725, 0, 14.695, -20.225, 0, -14.695, -20.225, 0, -23.776, 7.725, 0, 0, 0, 0],"antenna_coordinates_rx":[0,0,0]}
 
 
 if __name__ == "__main__":
